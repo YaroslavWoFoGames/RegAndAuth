@@ -1,22 +1,22 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using Firebase.Auth;
-using Firebase;
 using UnityEngine.Networking;
+using UnityEngine.UI;
+
 public class Menu : MonoBehaviour
 {
-   [SerializeField] private Text nick;
-   [SerializeField] private Image photo;
-
+   [SerializeField] private Text _nick;
+   [SerializeField] private Image _photo;
+   [SerializeField] private Account _account;
+    
     private void OnEnable()
     {
         LoadProfile();
+        //_account.UpdateDataAccount("Yar", 22 , ConnectionFirebase.User.UserId);
     }
     private void LoadProfile()
     {
-        nick.text = ConnectionFirebase.User.DisplayName;
+        _nick.text = ConnectionFirebase.User.DisplayName;
         StartCoroutine(PlayerImage(ConnectionFirebase.User.PhotoUrl.ToString()));
     }
     private IEnumerator PlayerImage(string url)
@@ -24,7 +24,11 @@ public class Menu : MonoBehaviour
         using (UnityWebRequest uwr = UnityWebRequestTexture.GetTexture(url))
         {
             yield return uwr.SendWebRequest();
-            photo.sprite = Sprite.Create(DownloadHandlerTexture.GetContent(uwr), new Rect(0f, 0f, DownloadHandlerTexture.GetContent(uwr).width, DownloadHandlerTexture.GetContent(uwr).height), new Vector2(0f, 0f));
+            _photo.sprite = Sprite.Create(DownloadHandlerTexture.GetContent(uwr), new Rect(0f, 0f, DownloadHandlerTexture.GetContent(uwr).width, DownloadHandlerTexture.GetContent(uwr).height), new Vector2(0f, 0f));
         }
     }
+
+
+
 }
+

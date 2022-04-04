@@ -42,6 +42,8 @@ public class RegistrationFirebase : MonoBehaviour
                 }
                 else
                 {
+                    PlayerPrefs.SetString("email", email);
+                    PlayerPrefs.SetString("password", password);
                     uiManager.ChangeWindows((int)WindowsApp.Menu);
                     errorManager.UpdateTextError("");
                 }
